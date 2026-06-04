@@ -37,4 +37,47 @@ export const itemService = {
             orderBy: { quantity: "asc" },
         });
     },
-}
+
+    async findExpiring() {
+        const today = new Date();
+        const sevenDaysLater = new Date();
+        sevenDaysLater.setDate(today.getDate() + 7);
+
+        const items = await prisma.item.findMany({
+            where: {
+                expirationDate: {
+                    not: null,
+                    lte: sevenDaysLater,
+                    gte: today,
+                },
+            },
+            include: { category: true },
+            orderBy: { expirationDate: "asc" },
+        });
+
+        return items.filter(
+            (item) => item.minimumQuantity !== null && item.quantity <= item.minimumQuantity
+        );
+    },
+
+    async create(data: ItemInput) {
+        return await prisma.item.create({
+            data,
+            include: { category: true },
+        });
+    },
+
+    async update(id: number, data: Partial<ItemInput>) {
+        return await prisma.item.update({
+            where: { id },
+            data,
+            include: { category: true }, //カテゴリがついてくる例）飲み物など￥
+        });
+    },
+
+    async delete(id: number) {
+        return await prisma.item.delete({
+            where: { id },
+        });
+    },
+};

@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
 import categoryRoutes from "./routes/categoryRoutes";
+import itemRoutes from "./routes/itemRoutes";
+
 
 dotenv.config();
 
@@ -23,5 +25,5 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/categories", categoryRoutes); //urlの後に続く処理をcategoryRoutesでしている。
-
+app.use("/api/items", itemRoutes);
 app.use(errorHandler);

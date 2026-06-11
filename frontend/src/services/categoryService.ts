@@ -1,7 +1,7 @@
 import api from "./api";
-import { ApiResponse, Category } from "../types";
+import type { ApiResponse, Category } from "../types";
 
-export default categoryService = {
+export const categoryService = {
 
     async getAll(): Promise<Category[]> {
         const res = await api.get<ApiResponse<Category[]>>("/categories");

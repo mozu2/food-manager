@@ -1,5 +1,5 @@
 import api from "./api";
-import { ApiResponse, Item } from "../types";
+import type { ApiResponse, Item } from "../types";
 
 export type ItemInput = {
     name: string;

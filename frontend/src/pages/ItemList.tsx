@@ -46,7 +46,7 @@ function ItemList() {
             const data = await itemService.getAll(id);
             setItems(data);
         } catch {
-            setError("失敗しました。")
+            setError("失敗しました。");
         }
     }
 

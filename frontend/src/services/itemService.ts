@@ -17,13 +17,18 @@ export const itemService = {
         return res.data.data;
     },
 
-    async getlowStock(): Promise<Item[]> {
+    async getById(id: number): Promise<Item> {
+        const res = await api.get<ApiResponse<Item>>(`/items/${id}`);
+        return res.data.data;
+    },
+
+    async getLowStock(): Promise<Item[]> {
         const res = await api.get<ApiResponse<Item[]>>("/items/low-stock");
         return res.data.data;
     },
 
     async getExpiring(): Promise<Item[]> {
-        const res = await api.get<ApiResponse<Item[]>>("/item/expiring");
+        const res = await api.get<ApiResponse<Item[]>>("/items/expiring");
         return res.data.data;
     },
 

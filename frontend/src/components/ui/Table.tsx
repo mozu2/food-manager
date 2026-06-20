@@ -3,22 +3,23 @@ type Props = {
     children: React.ReactNode;
 }
 
-
 function Table({ headers, children }: Props) {
-
     return (
-        <table className="table-auto border-collapse w-full">
-            <thead className="bg-gray-100">
-                <tr>
-                    {headers.map((h) => (
-                        <th className="border px-4 py-2" key={h}>{h}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody className="border px-4 py-2">{children}</tbody>
-        </table>
-    )
-};
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+            <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
+                    <tr>
+                        {headers.map((h) => (
+                            <th className="px-4 py-3 font-medium" key={h}>{h}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 bg-white">
+                    {children}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
 export default Table;
-
-

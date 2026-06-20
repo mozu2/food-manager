@@ -1,5 +1,7 @@
 export type Unit = "GRAM" | "ML" | "PIECE" | "BAG" | "BOTTLE" | "BOX";
 
+export const VALID_UNITS: Unit[] = ["GRAM", "ML", "PIECE", "BAG", "BOTTLE", "BOX"];
+
 export const UNIT_LABELS: Record<Unit, string> = {
     "GRAM": "g",
     "ML": "ml",

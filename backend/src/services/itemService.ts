@@ -10,12 +10,37 @@ type ItemInput = {
 };
 
 export const itemService = {
-    async findAll(categoryId?: number) {
-        return await prisma.item.findMany({
-            where: categoryId ? { categoryId } : undefined,
+    async findAll(options: {
+        categoryId?: number;
+        keyword?: string;
+        page: number;
+        limit: number;
+    }) {
+
+        const { categoryId, keyword, page, limit } = options;
+
+        const where = {
+            categoryId: categoryId ?? undefined,
+            name: keyword ? { contains: keyword } : undefined,
+        }
+
+        const total = await prisma.item.count({ where });
+
+        const data = await prisma.item.findMany({
+            where,
+            skip: (page - 1) * limit,
+            take: limit,
             include: { category: true },
             orderBy: { createdAt: "desc" },
         });
+
+        return {
+            items: data,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+        }
     },
 
     async findById(id: number) {

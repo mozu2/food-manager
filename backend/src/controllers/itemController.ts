@@ -5,6 +5,7 @@ import { AppError } from "../middleware/errorHandler";
 import { VALID_UNITS } from "../types/index";
 import { success } from "zod/v4";
 
+
 const itemSchema = z.object({
     name: z.string().min(1, "食材名は必須です").max(100, "100文字以内で入力してください"),
     categoryId: z.number().int().positive("カテゴリは必須です"),
@@ -16,11 +17,16 @@ const itemSchema = z.object({
 
 const itemUpdateSchema = itemSchema.partial(); //すべてのフィールドを任意にする
 
+
+
 export const itemController = {
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
-            const categoryId = req.query.categoryId ? Number(req.query.cagegoryId) : undefined;
-            const items = await itemService.findAll(categoryId);
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 10;
+            const keyword = req.query.keyword as string | undefined;
+            const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
+            const items = await itemService.findAll({ page, limit, keyword, categoryId });
             res.json({ success: true, data: items });
         } catch (error) {
             next(error);

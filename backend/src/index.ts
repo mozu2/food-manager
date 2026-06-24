@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
 import categoryRoutes from "./routes/categoryRoutes";
 import itemRoutes from "./routes/itemRoutes";
-
+import aiRoutes from "./routes/aiRoutes";
 
 dotenv.config();
 
@@ -26,4 +26,6 @@ app.listen(PORT, () => {
 
 app.use("/api/categories", categoryRoutes); //urlの後に続く処理をcategoryRoutesでしている。
 app.use("/api/items", itemRoutes);
+app.use("/api/ai", aiRoutes);
 app.use(errorHandler);
+
